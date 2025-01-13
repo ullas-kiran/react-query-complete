@@ -17,6 +17,7 @@ function App() {
   if (isLoading) return <div>Loading...</div>;
   if (error instanceof Error) return <div>Error: {error.message}</div>;
 
+  // mutation for post 
 const {mutate,isPending,isError,isSuccess} =useMutation({mutationFn:(newPost)=> fetch("https://jsonplaceholder.typicode.com/todos",{
   method:"POST",
   body:JSON.stringify(newPost)
