@@ -26,6 +26,15 @@ const {mutate,isPending,isError,isSuccess} =useMutation({mutationFn:(newPost)=> 
   return (
     <div>
       {isPending&&<p>Data is being added...</p>}
+      <button onClick={()=>
+        mutate({
+          userId:5000,
+          id:4000,
+          title:"hey lets do this"
+        })
+      }>
+        Add Post
+      </button>
       {data?.map((todo: Todo) => (
         <div key={todo.id}>
           <h1>Id: {todo.id}</h1>
