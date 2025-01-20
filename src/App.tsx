@@ -25,15 +25,6 @@ function App() {
   if (isLoading) return <div>Loading...</div>;
   if (error instanceof Error) return <div>{error.message}</div>;
 
-  Mutation for creating a new todo item
-  const { mutate, isPending, isError, isSuccess } = useMutation({
-    mutationFn: (newPost: PostData) =>
-      fetch("https://jsonplaceholder.typicode.com/todos", {
-        method: "POST",
-        body: JSON.stringify(newPost),
-      }).then((res) => res.json()),
-  });
-
   return (
     <div>
 
