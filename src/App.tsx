@@ -7,7 +7,6 @@ import { useState } from "react";
 
 
 function App() {
-const [title,setTitle]=useState()	
   const { data:usersData, isLoading:isUsersLoading, error:usersError } = useQuery<UserResponseHttpData[]>({
     queryKey: ["getUsers"],
     queryFn: getUsers
@@ -32,7 +31,7 @@ const [title,setTitle]=useState()
 					</div>
 				))}
 			</div>
-		):(<></>)}
+		):(<>Loading....</>)}
 	</div>
   )
 }
