@@ -2,75 +2,41 @@ import { getUsers } from "./utils/api";
 import "./App.css";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { UserResponseHttpData } from "./utils/types";
+import { useState } from "react";
 
 
 
 function App() {
-  const { data, isLoading, error } = useQuery<UserResponseHttpData[]>({
+const [title,setTitle]=useState()	
+  const { data:usersData, isLoading:isUsersLoading, error:usersError } = useQuery<UserResponseHttpData[]>({
     queryKey: ["getUsers"],
     queryFn: getUsers
    })
 
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error instanceof Error) return <div>{error.message}</div>;
+  if(usersError&&!isUsersLoading){
+	return <div>an error has occured while fetching users</div>
+  }
 
-  const {
-		mutate: createPostMutation,
-		isSuccess: isCreatePostSuccess,
-		isPending: isCreatePostPending,
-	} = useMutation({
-		mutationFn: createPost,
-		onSuccess: () => {
-			console.log("onSuccess");
-			queryClient.invalidateQueries({ queryKey: ["getPosts"] });
-			queryClient.invalidateQueries({ queryKey: ["getUsers"] });
-		},
-	});
 
 
   return (
-    <div>
-      {/* {data?.map((todo: Todo) => (
-        <div key={todo.id}>
-          <h1>Id: {todo.id}</h1>
-          <p>Title: {todo.title}</p>
-          <p>Completed: {todo.completed ? "Yes" : "No"}</p>
-        </div>
-      ))} */}
-      <form
-				onSubmit={(event) => {
-					event.preventDefault();
-					createPostMutation({
-						title,
-						body,
-						userId: USER_ID,
-					});
-				}}
-			>
-				<label htmlFor="title">Title</label>
-				<input
-					name="title"
-					id="title"
-					value={title}
-					onChange={(event) => {
-						setTitle(event.target.value);
-					}}
-				/>
-				<br />
-				<label htmlFor="body">Body</label>
-				<input
-					name="body"
-					id="body"
-					value={body}
-					onChange={(event) => {
-						setBody(event.target.value);
-					}}
-				/>
-				<button>Create Post</button>
-			</form>
-    </div>
-  );
+	<div>
+			{!isUsersLoading&&usersData?(
+			<div>
+				{usersData?.map((user)=>(
+					<div key={user.id}>
+						<b>{user.name}</b>
+						<b>{user.username}</b>
+						<b>{user.email}</b>
+					</div>
+				))}
+			</div>
+		):(<></>)}
+	</div>
+  )
 }
+  
+
 
 export default App;
