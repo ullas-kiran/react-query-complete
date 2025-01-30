@@ -12,8 +12,8 @@ function App() {
    })
 
 
-//   if (isLoading) return <div>Loading...</div>;
-//   if (error instanceof Error) return <div>{error.message}</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (error instanceof Error) return <div>{error.message}</div>;
 
   const {
 		mutate: createPostMutation,
